@@ -1,0 +1,7 @@
+{
+  "name": "Sounds-from-Monster-Hunter",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
