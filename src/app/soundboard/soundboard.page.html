@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title style="font-weight: bold;">
+      Soundboard
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar color="primary">
+      <ion-title size="large">Soundboard</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="container">
+    <ion-card class="item" *ngFor="let monster of monsters">
+      <ion-text color="primary" class="name" [innerHTML]="monster.name"></ion-text>
+      <ion-button color="primary" (click)="playAudio(monster)">
+        <ion-icon name="play"></ion-icon>
+      </ion-button>
+      <!-- <div class="image">
+          <img [src]="monster.imgSRC">
+      </div> -->
+    </ion-card>
+  </div>
+
+</ion-content>
