@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title style="font-weight: bold;">
+      Soundboard
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar color="primary">
+      <ion-title size="large">Soundboard</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="container">
+    <ion-searchbar [(ngModel)]="this.search" animated></ion-searchbar>
+    <ion-card class="item" [class.item_expanded]="monster.expanded" *ngFor="let monster of monsters"
+    [class.item_hidden]="!monster.name.includes(this.search) && this.search !== ''">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: -8px;">
+        <ion-text color="primary" class="name" style="display: flex; align-items: center;">
+          <ion-icon class="ion-activatable ripple-parent" (click)="monster.expanded = !monster.expanded" style="margin-right: 8px; height: 2em; width: 2em;"
+          name="{{ monster.expanded ? 'close-circle' : 'help-circle'}}"></ion-icon>
+          {{ monster.name }}
+        </ion-text>
+        <ion-button color="primary" (click)="playAudio(monster)">
+          <ion-icon name="{{ monster.audio.paused ? 'play' : 'stop' }}"></ion-icon>
+        </ion-button>
+      </div>
+      <img style="height: 27em;" [src]="monster.imgSRC" *ngIf="monster.expanded">
+    </ion-card>
+  </div>
+
+</ion-content>

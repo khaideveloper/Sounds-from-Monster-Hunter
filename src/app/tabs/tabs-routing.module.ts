@@ -9,26 +9,26 @@ const routes: Routes = [
     children: [
       {
         path: 'info',
-        loadChildren: () => import('../info/info.module').then(m => m.InfoPageModule)
+        loadChildren: () => import('./pages/info/info.module').then(m => m.InfoPageModule)
       },
       {
         path: 'soundboard',
-        loadChildren: () => import('../soundboard/soundboard.module').then(m => m.SoundboardPageModule)
+        loadChildren: () => import('./pages/soundboard/soundboard.module').then(m => m.SoundboardPageModule)
       },
       {
         path: 'settings',
-        loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
+        loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
       },
       {
         path: '',
-        redirectTo: '/tabs/info',
+        redirectTo: '/tabs/soundboard',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/info',
+    redirectTo: '/tabs/soundboard',
     pathMatch: 'full'
   }
 ];

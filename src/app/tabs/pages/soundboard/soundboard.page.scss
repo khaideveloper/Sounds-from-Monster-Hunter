@@ -1,0 +1,25 @@
+.container {
+    padding: 1em;
+    
+    .item_expanded {
+        height: 30em !important;
+    }
+
+    .item_hidden {
+        display: none !important;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+        height: 4em;
+        transition: height 0.25s ease-in-out;
+
+        .name {
+            font-weight: bold;
+            font-size: 1.5em;
+            white-space: nowrap;
+        }
+    }
+}
