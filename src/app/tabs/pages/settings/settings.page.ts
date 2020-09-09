@@ -1,3 +1,4 @@
+import { SettingsService } from './settings.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class SettingsPage {
 
-  constructor() {}
+  constructor(
+    public settings_service: SettingsService
+  ) {}
 
 }

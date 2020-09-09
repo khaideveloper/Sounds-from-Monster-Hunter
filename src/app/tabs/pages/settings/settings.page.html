@@ -1,7 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <ion-title style="font-weight: bold;">
-      Settings
+      <span style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <span>Settings</span>
+        <img style="height: 60px;" src="assets/icon/app_icon.svg">
+      </span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,6 +16,12 @@
     </ion-toolbar>
   </ion-header>
 
-  New stuff coming here
+  <!-- Toggles in a List -->
+  <ion-list>
+    <ion-item *ngFor="let item of this.settings_service.toggles">
+      <ion-label>{{ this.settings_service.toggles_i18n[item] }}</ion-label>
+      <ion-toggle (ionChange)="this.settings_service.saveSettings()" [(ngModel)]="this.settings_service[item]"></ion-toggle>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

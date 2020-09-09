@@ -1,3 +1,4 @@
+import { SettingsService } from './../settings/settings.service';
 import { Component } from '@angular/core';
 import { monsters } from './monsters.model';
 import { Platform } from '@ionic/angular';
@@ -39,13 +40,13 @@ export class SoundboardPage {
   search: string = '';
 
   constructor(
-    public platform: Platform
+    public platform: Platform,
+    public settings_service: SettingsService
   ) {
     
     monsters.forEach((element) => {
       let monster = new Monster( element.split('_').join(' '), 'assets/audio/' + element + '.mp3', '/assets/image/' + element + '.png');
       monster.audio = new Audio();
-      monster.audio.src = monster.audioSRC;
       this.monsters.push(monster);
     });
     
@@ -54,6 +55,7 @@ export class SoundboardPage {
   /** Play a monster audio */
   playAudio(monster : Monster) {
     if(monster.audio.paused) {
+      monster.audio.src = monster.audioSRC;
       monster.audio.play();
     } else {
       monster.audio.pause();

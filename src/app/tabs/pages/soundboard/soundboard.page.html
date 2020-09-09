@@ -1,7 +1,10 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" style="max-height: 56px;">
     <ion-title style="font-weight: bold;">
-      Soundboard
+      <span style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <span>Soundboard</span>
+        <img style="height: 60px;" src="assets/icon/app_icon.svg">
+      </span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,20 +17,20 @@
   </ion-header>
 
   <div class="container">
-    <ion-searchbar [(ngModel)]="this.search" animated></ion-searchbar>
+    <ion-searchbar [(ngModel)]="this.search" animated *ngIf="this.settings_service.canSearch"></ion-searchbar>
     <ion-card class="item" [class.item_expanded]="monster.expanded" *ngFor="let monster of monsters"
-    [class.item_hidden]="!monster.name.includes(this.search) && this.search !== ''">
+    [class.item_hidden]="(!monster.name.toLowerCase().includes(this.search.toLowerCase()) && this.search !== '') && this.settings_service.canSearch">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: -8px;">
         <ion-text color="primary" class="name" style="display: flex; align-items: center;">
           <ion-icon class="ion-activatable ripple-parent" (click)="monster.expanded = !monster.expanded" style="margin-right: 8px; height: 2em; width: 2em;"
-          name="{{ monster.expanded ? 'close-circle' : 'help-circle'}}"></ion-icon>
+          name="{{ monster.expanded ? 'close-circle' : 'help-circle'}}" *ngIf="this.settings_service.hasImage"></ion-icon>
           {{ monster.name }}
         </ion-text>
-        <ion-button color="primary" (click)="playAudio(monster)">
+        <ion-button color="{{ monster.audio.paused ? 'primary' : 'danger' }}" (click)="playAudio(monster)">
           <ion-icon name="{{ monster.audio.paused ? 'play' : 'stop' }}"></ion-icon>
         </ion-button>
       </div>
-      <img style="height: 27em;" [src]="monster.imgSRC" *ngIf="monster.expanded">
+      <div class="desc" [ngStyle]="{ 'background-image' : 'url(' + monster.imgSRC + ')' }" *ngIf="monster.expanded && this.settings_service.hasImage"></div>      
     </ion-card>
   </div>
 
