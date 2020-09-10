@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="false">
   <ion-toolbar color="primary"> <ion-title> <span> {{ this.translate_service.translate('TITLE_INFO') }} <img src="assets/icon/app_icon.svg"> </span> </ion-title> </ion-toolbar>
 </ion-header>
 
@@ -14,6 +14,10 @@
 
   <div style="padding: 1em" *ngIf="this.translate_service.currentLanguage === 'it'">
     <p> Questa app è stata creata da me, Khai.<br> Puoi contattarmi all'email <a href="mailto:khai.developer@gmail.com">khai.developer@gmail.com</a> </p>
+  </div>
+
+  <div style="padding: 1em">
+    {{ this.translate_service.translate('VERSION_NUMBER') + ' ' + this.version }}
   </div>
 
 </ion-content>

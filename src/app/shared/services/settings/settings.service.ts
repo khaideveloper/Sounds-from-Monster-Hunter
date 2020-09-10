@@ -7,7 +7,7 @@ export class Settings {
   /** If the images are enabled */
   hasImage: boolean = true;
   /** Current app volume */
-  volume: number = 0.25;
+  volume: number = 0.3;
   /** If the audio can play one over another */
   hasOverflow: boolean = false;
 }
@@ -43,7 +43,8 @@ export class SettingsService {
   /** Saves the current settings to the local storage */
   saveSettings() {
     if(!this.dirty) { return; }
-    this.settingsKeys.forEach((value) => { this.storage.set(value,this[value]); });
+    this.settingsKeys.forEach((value) => { this.storage.set(value,this.settings[value]); });
+    this.dirty = false;
   }
 
   /** Loads the current settings from the local storage */
@@ -52,8 +53,8 @@ export class SettingsService {
       this.storage.get(value)
       .catch((ex) => { console.error(ex); })
       .then((a) => {
-        if(a != null) { this[value] = a; }
-        else { this.storage.set(value, this[value]); }
+        if(a != null) { this.settings[value] = a; }
+        else { this.storage.set(value, this.settings[value]); }
       })
     });
   }

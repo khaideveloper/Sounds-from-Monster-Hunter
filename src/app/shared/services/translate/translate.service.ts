@@ -64,12 +64,10 @@ export class TranslateService {
 
   /** Select the passed language */
   use(lang: string) {
-    console.log(lang);
     //Check if it is valid
     if(lang === '' || lang == null || Languages.find((a) => { return a === lang; }) == null) { return; }
     //Get the language data
     this.data = JSON.parse(JSON.stringify(LanguagesData[lang] || {}));
-    console.log(this.data);
     //Set the current language
     this.currentLanguage = lang;
     //Emit that the language has changed

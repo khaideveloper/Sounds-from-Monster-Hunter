@@ -48,6 +48,7 @@ export class SoundboardPage {
   playAudio(monster : Monster) {
     if(monster.audio.paused) {
       monster.audio.src = monster.audioSRC;
+      monster.audio.volume = this.settings_service.settings.volume;
       monster.audio.play();
     } else {
       monster.audio.pause();

@@ -18,6 +18,7 @@ export const LanguagesData: any = {
     "SELECT_LANGUAGE": "Select Language",
     "CANCEL": "Cancel",
     "OK": "OK",
+    "VERSION_NUMBER": "Version",
   },
   it: {
     "LANG_EN": "Inglese",
@@ -34,5 +35,6 @@ export const LanguagesData: any = {
     "SELECT_LANGUAGE": "Seleziona la lingua",
     "CANCEL": "Annulla",
     "OK": "OK",
+    "VERSION_NUMBER": "Versione",
   }
 }
