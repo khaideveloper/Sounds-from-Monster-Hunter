@@ -19,6 +19,9 @@ export class SoundboardPage {
   /** Current serach string */
   search: string = '';
 
+  /** Currently Playing */
+  current: HTMLAudioElement;
+
   //#endregion
 
   //#region Init
@@ -46,13 +49,42 @@ export class SoundboardPage {
 
   /** Play a monster audio */
   playAudio(monster : Monster) {
+    //TODO: This code sucks
+    if(this.current != null && !this.settings_service.settings.hasOverflow) {
+      monster.audio.pause();
+      monster.audio.currentTime = 0;
+      this.current = null;
+    }
     if(monster.audio.paused) {
       monster.audio.src = monster.audioSRC;
       monster.audio.volume = this.settings_service.settings.volume;
-      monster.audio.play();
+      this.current = monster.audio;
+      monster.audio.play()
+      .then(() => {
+        if(!monster.audio.paused) {
+          monster.audio.pause();
+          monster.audio.currentTime = 0;
+          this.current = null;
+        }
+      })
+      .finally(() => {
+        if(!monster.audio.paused) {
+          monster.audio.pause();
+          monster.audio.currentTime = 0;
+          this.current = null;
+        }
+      });
+      setTimeout(() => {
+        if(!monster.audio.paused) {
+          monster.audio.pause();
+          monster.audio.currentTime = 0;
+          this.current = null;
+        }
+      }, 10000);
     } else {
       monster.audio.pause();
       monster.audio.currentTime = 0;
+      this.current = null;
     }
   }
 

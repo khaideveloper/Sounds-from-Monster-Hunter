@@ -26,6 +26,16 @@ export class SettingsPage {
 
   //#region 
 
+  changeLanguage() {
+    this.translate_service.use(this.translate_service.currentLanguage);
+    this.dirty();
+  }
+
+  dirty() {
+    this.settings_service.dirty = true;
+    this.settings_service.saveSettings();
+  }
+
   //#endregion
 
 }

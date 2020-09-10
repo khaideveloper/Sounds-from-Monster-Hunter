@@ -10,7 +10,7 @@
     <!-- Language -->
     <ion-item>
       <ion-label>{{ this.translate_service.translate('SELECT_LANGUAGE') }}</ion-label>
-      <ion-select [(ngModel)]="this.translate_service.currentLanguage" (ionChange)="this.translate_service.use(this.translate_service.currentLanguage)"
+      <ion-select [(ngModel)]="this.translate_service.currentLanguage" (ionChange)="this.changeLanguage()"
       [cancelText]="this.translate_service.translate('CANCEL')" [okText]="this.translate_service.translate('OK')">
         <ion-select-option *ngFor="let lang of this.translate_service._Languages" [value]="lang">
           {{ this.translate_service.translate('LANG_' + lang) }}
@@ -21,31 +21,31 @@
     <!-- Search -->
     <ion-item>
       <ion-label>{{ this.translate_service.translate('SETTINGS_CANSEARCH') }}</ion-label>
-      <ion-toggle (ionChange)="this.settings_service.dirty = true" [(ngModel)]="this.settings_service.settings.canSearch"></ion-toggle>
+      <ion-toggle (ionChange)="dirty()" [(ngModel)]="this.settings_service.settings.canSearch"></ion-toggle>
     </ion-item>
 
     <!-- Images -->
     <ion-item>
       <ion-label>{{ this.translate_service.translate('SETTINGS_HASIMAGE') }}</ion-label>
-      <ion-toggle (ionChange)="this.settings_service.dirty = true" [(ngModel)]="this.settings_service.settings.hasImage"></ion-toggle>
+      <ion-toggle (ionChange)="dirty()" [(ngModel)]="this.settings_service.settings.hasImage"></ion-toggle>
     </ion-item>
 
     <!-- Overflow -->
     <ion-item>
       <ion-label>{{ this.translate_service.translate('SETTINGS_HASOVERFLOW') }}</ion-label>
-      <ion-toggle (ionChange)="this.settings_service.dirty = true" [(ngModel)]="this.settings_service.settings.hasOverflow"></ion-toggle>
+      <ion-toggle (ionChange)="dirty()" [(ngModel)]="this.settings_service.settings.hasOverflow"></ion-toggle>
     </ion-item>
 
     <!-- Volume -->
     <ion-item>
       <ion-label>{{ this.translate_service.translate('SETTINGS_VOLUME') }}</ion-label>
-      <ion-range min="0" max="1" step="0.1" (ionChange)="this.settings_service.dirty = true" snaps="true" [(ngModel)]="this.settings_service.settings.volume"></ion-range>
+      <ion-range min="0" max="1" step="0.1" (ionChange)="dirty()" snaps="true" [(ngModel)]="this.settings_service.settings.volume"></ion-range>
     </ion-item>
 
     <!-- Salva le impostazioni -->
-    <ion-button [disabled]="!this.settings_service.dirty" expand="full" (click)="this.settings_service.saveSettings()">
+    <!-- <ion-button [disabled]="!this.settings_service.dirty" expand="full" (click)="this.settings_service.saveSettings()">
       {{ this.translate_service.translate('SAVE') }}
-    </ion-button>
+    </ion-button> -->
 
   </ion-list>
 
