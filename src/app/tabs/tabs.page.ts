@@ -7,6 +7,22 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  //#region Variables
+
+  //#endregion
+
+  //#region Init
+
+  constructor(
+
+  ) {
+
+  }
+
+  //#endregion
+
+  //#region 
+
+  //#endregion
 
 }

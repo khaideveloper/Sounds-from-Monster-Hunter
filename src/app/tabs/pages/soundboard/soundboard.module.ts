@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SoundboardPage } from './soundboard.page';
-
 import { SoundboardPageRoutingModule } from './soundboard-routing.module';
+import { SharedModule } from 'src/app/shared.module';
 
 @NgModule({
   imports: [
@@ -12,10 +12,13 @@ import { SoundboardPageRoutingModule } from './soundboard-routing.module';
     CommonModule,
     FormsModule,
     SoundboardPageRoutingModule,
+    SharedModule,
   ],
-  declarations: [SoundboardPage],
+  declarations: [
+    SoundboardPage,
+  ],
   providers: [
-    Platform
+    Platform,
   ]
 })
-export class SoundboardPageModule {}
+export class SoundboardPageModule { }

@@ -1,3 +1,4 @@
+import { TranslateService } from './../../../shared/services/translate/translate.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,6 +8,22 @@ import { Component } from '@angular/core';
 })
 export class InfoPage {
 
-  constructor() {}
+  //#region Variables
+
+  //#endregion
+
+  //#region Init
+
+  constructor(
+    public translate_service: TranslateService,
+  ) {
+
+  }
+
+  //#endregion
+
+  //#region 
+
+  //#endregion
 
 }

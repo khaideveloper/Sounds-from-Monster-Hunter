@@ -1,5 +1,5 @@
+import { TranslateService } from './shared/services/translate/translate.service';
 import { Component } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -10,19 +10,38 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+
+  //#region Variables
+
+  //#endregion
+
+  //#region Init
+  
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private translate_service: TranslateService,
   ) {
     this.initializeApp();
   }
 
+  /** Initialize the app */
   initializeApp() {
-    this.platform.ready().then(() => {
+    this.platform.ready()
+    .catch((ex) => { console.error(ex); })
+    .then(() => {
+      this.translate_service.init();
       this.statusBar.backgroundColorByHexString('#7a212f')
       this.statusBar.styleBlackOpaque();
       this.splashScreen.hide();
     });
   }
+
+  //#endregion
+
+  //#region 
+
+  //#endregion
+
 }

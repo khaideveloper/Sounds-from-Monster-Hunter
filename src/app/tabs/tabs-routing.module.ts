@@ -9,27 +9,27 @@ const routes: Routes = [
     children: [
       {
         path: 'info',
-        loadChildren: () => import('./pages/info/info.module').then(m => m.InfoPageModule)
+        loadChildren: () => import('./pages/info/info.module').then(m => m.InfoPageModule),
       },
       {
         path: 'soundboard',
-        loadChildren: () => import('./pages/soundboard/soundboard.module').then(m => m.SoundboardPageModule)
+        loadChildren: () => import('./pages/soundboard/soundboard.module').then(m => m.SoundboardPageModule),
       },
       {
         path: 'settings',
-        loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
+        loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule),
       },
       {
         path: '',
         redirectTo: '/tabs/soundboard',
-        pathMatch: 'full'
+        pathMatch: 'full',
       }
     ]
   },
   {
     path: '',
     redirectTo: '/tabs/soundboard',
-    pathMatch: 'full'
+    pathMatch: 'full',
   }
 ];
 
@@ -37,4 +37,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

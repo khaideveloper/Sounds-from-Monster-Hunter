@@ -1,32 +1,8 @@
-import { SettingsService } from './../settings/settings.service';
+import { TranslateService } from './../../../shared/services/translate/translate.service';
+import { SettingsService } from '../../../shared/services/settings/settings.service';
 import { Component } from '@angular/core';
-import { monsters } from './monsters.model';
+import { monsters, Monster } from '../../../models/monsters.model';
 import { Platform } from '@ionic/angular';
-
-export class Monster {
-  name : string;
-  audioSRC : string;
-  audio: HTMLAudioElement;
-  imgSRC : string;
-  expanded : boolean;
-  playing: boolean;
-  constructor(name? : string, audioSRC? : string, imgSRC? : string) {
-    if(name != null) { this.name = name; }
-    if(audioSRC != null) { this.audioSRC = audioSRC; }
-    if(imgSRC != null) { this.imgSRC = imgSRC; }
-    this.expanded = false;
-    this.playing = false;
-  }
-}
-
-export class MonsterAudio {
-  audio : HTMLAudioElement;
-  status : boolean;
-  constructor(audio : HTMLAudioElement = null, status : boolean = null) {
-    this.audio = audio;
-    this.status = status;
-  }
-}
 
 @Component({
   selector: 'app-soundboard',
@@ -35,22 +11,38 @@ export class MonsterAudio {
 })
 export class SoundboardPage {
 
+  //#region Variables
+
+  /** Monsters array */
   monsters : Array<Monster> = new Array<Monster>();
 
+  /** Current serach string */
   search: string = '';
+
+  //#endregion
+
+  //#region Init
 
   constructor(
     public platform: Platform,
-    public settings_service: SettingsService
+    public settings_service: SettingsService,
+    public translate_service: TranslateService,
   ) {
-    
+    this.initMonsters();
+  }
+
+  /** Initialize every monster on the list */
+  initMonsters() {
     monsters.forEach((element) => {
       let monster = new Monster( element.split('_').join(' '), 'assets/audio/' + element + '.mp3', '/assets/image/' + element + '.png');
       monster.audio = new Audio();
       this.monsters.push(monster);
     });
-    
   }
+
+  //#endregion
+
+  //#region Audio
 
   /** Play a monster audio */
   playAudio(monster : Monster) {
@@ -63,5 +55,6 @@ export class SoundboardPage {
     }
   }
 
+  //#endregion
 
 }

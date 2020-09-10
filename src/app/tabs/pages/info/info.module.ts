@@ -3,16 +3,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InfoPage } from './info.page';
-
 import { InfoPageRoutingModule } from './info-routing.module';
+import { SharedModule } from 'src/app/shared.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    InfoPageRoutingModule
+    InfoPageRoutingModule,
+    SharedModule,
   ],
-  declarations: [InfoPage]
+  declarations: [
+    InfoPage,
+  ]
 })
-export class InfoPageModule {}
+export class InfoPageModule { }

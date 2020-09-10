@@ -1,3 +1,31 @@
+/* Monster class */
+export class Monster {
+    name : string;
+    audioSRC : string;
+    audio: HTMLAudioElement;
+    imgSRC : string;
+    expanded : boolean;
+    playing: boolean;
+    constructor(name? : string, audioSRC? : string, imgSRC? : string) {
+      if(name != null) { this.name = name; }
+      if(audioSRC != null) { this.audioSRC = audioSRC; }
+      if(imgSRC != null) { this.imgSRC = imgSRC; }
+      this.expanded = false;
+      this.playing = false;
+    }
+}
+ 
+/* Monster Audio */
+export class MonsterAudio {
+    audio : HTMLAudioElement;
+    status : boolean;
+    constructor(audio : HTMLAudioElement = null, status : boolean = null) {
+        this.audio = audio;
+        this.status = status;
+    }
+}
+  
+/* Monster List */
 export const monsters : string[] = [
     "Agnaktor",
     "Ahtal_Ka",
@@ -112,4 +140,4 @@ export const monsters : string[] = [
     "Yian_Kut_Ku",
     "Zamtrios",
     "Zinogre"
-   ]
+]

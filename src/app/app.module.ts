@@ -1,18 +1,19 @@
+import { TranslateService } from './shared/services/translate/translate.service';
+import { SettingsService } from './shared/services/settings/settings.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
+import { SharedModule } from './shared.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   entryComponents: [
 
@@ -21,15 +22,18 @@ import { IonicStorageModule } from '@ionic/storage';
     BrowserModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    SettingsService,
+    TranslateService,
   ],
   bootstrap: [
-    AppComponent
+    AppComponent,
   ]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,12 +1,13 @@
 {
   "name": "Sounds-from-Monster-Hunter",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "android": "ionic cordova run android -l",
+    "build": "ionic cordova build android --prod --release",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
