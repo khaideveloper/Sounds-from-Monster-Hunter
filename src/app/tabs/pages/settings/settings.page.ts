@@ -28,7 +28,6 @@ export class SettingsPage {
 
   changeLanguage() {
     this.translate_service.use(this.translate_service.currentLanguage);
-    this.dirty();
   }
 
   dirty() {

@@ -72,6 +72,8 @@ export class TranslateService {
     this.currentLanguage = lang;
     //Emit that the language has changed
     this.langChanged.emit(lang);
+    //Salvo la lingua
+    this.saveLanguage();
   }
 
   //#endregion

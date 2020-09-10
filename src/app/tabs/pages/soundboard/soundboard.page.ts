@@ -40,6 +40,15 @@ export class SoundboardPage {
       let monster = new Monster( element.split('_').join(' '), 'assets/audio/' + element + '.mp3', '/assets/image/' + element + '.png');
       monster.audio = new Audio();
       this.monsters.push(monster);
+      monster.audio.onplay = (() => {
+        setTimeout(() => {
+          if(!monster.audio.paused) {
+            monster.audio.pause();
+            monster.audio.currentTime = 0;
+            this.current = null;
+          }
+        }, 10000);
+      });
     });
   }
 
@@ -59,28 +68,7 @@ export class SoundboardPage {
       monster.audio.src = monster.audioSRC;
       monster.audio.volume = this.settings_service.settings.volume;
       this.current = monster.audio;
-      monster.audio.play()
-      .then(() => {
-        if(!monster.audio.paused) {
-          monster.audio.pause();
-          monster.audio.currentTime = 0;
-          this.current = null;
-        }
-      })
-      .finally(() => {
-        if(!monster.audio.paused) {
-          monster.audio.pause();
-          monster.audio.currentTime = 0;
-          this.current = null;
-        }
-      });
-      setTimeout(() => {
-        if(!monster.audio.paused) {
-          monster.audio.pause();
-          monster.audio.currentTime = 0;
-          this.current = null;
-        }
-      }, 10000);
+      monster.audio.play();
     } else {
       monster.audio.pause();
       monster.audio.currentTime = 0;
