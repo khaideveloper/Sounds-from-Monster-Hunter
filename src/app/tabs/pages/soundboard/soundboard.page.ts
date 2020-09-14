@@ -37,18 +37,12 @@ export class SoundboardPage {
   /** Initialize every monster on the list */
   initMonsters() {
     monsters.forEach((element) => {
-      let monster = new Monster( element.split('_').join(' '), 'assets/audio/' + element + '.mp3', '/assets/image/' + element + '.png');
+      let monster = new Monster(
+        element.name.split('_').join(' '),
+        'https://docs.google.com/uc?export=download&id=' + element.audio_code,
+        'https://i.imgur.com/' + element.img_code + '.png');
       monster.audio = new Audio();
       this.monsters.push(monster);
-      monster.audio.onplay = (() => {
-        setTimeout(() => {
-          if(!monster.audio.paused) {
-            monster.audio.pause();
-            monster.audio.currentTime = 0;
-            this.current = null;
-          }
-        }, 10000);
-      });
     });
   }
 
@@ -58,16 +52,22 @@ export class SoundboardPage {
 
   /** Play a monster audio */
   playAudio(monster : Monster) {
+    monster.audio.currentTime = 0;
     //TODO: This code sucks
     if(this.current != null && !this.settings_service.settings.hasOverflow) {
-      monster.audio.pause();
-      monster.audio.currentTime = 0;
+      this.current.pause();
+      this.current.currentTime = 0;
       this.current = null;
     }
     if(monster.audio.paused) {
       monster.audio.src = monster.audioSRC;
       monster.audio.volume = this.settings_service.settings.volume;
       this.current = monster.audio;
+      monster.audio.onended = (() => {
+        monster.audio.pause();
+        monster.audio.currentTime = 0;
+        this.current = null;
+      }); 
       monster.audio.play();
     } else {
       monster.audio.pause();

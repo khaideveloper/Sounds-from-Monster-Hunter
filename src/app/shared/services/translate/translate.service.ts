@@ -46,7 +46,7 @@ export class TranslateService {
     .then((value) => {
       if(value != null) {
         let find = Languages.find((a) => { return a === value; });
-        if(find != null) { this.currentLanguage = find; return; }
+        if(find != null) { this.use(find); return; }
       }
       this.use(Languages[0]);
     });
