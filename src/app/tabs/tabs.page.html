@@ -1,20 +1,36 @@
 <ion-tabs>
 
   <ion-tab-bar color="primary" slot="bottom">
+
     <ion-tab-button tab="info">
       <ion-icon name="information-circle"></ion-icon>
-      <ion-label>Info</ion-label>
+      <ion-label>{{ this.translate_service.translate('TITLE_INFO') }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="soundboard">
-      <ion-icon name="musical-notes"></ion-icon>
-      <ion-label>Soundboard</ion-label>
+    <ion-tab-button tab="wip">
+      <ion-icon name="warning"></ion-icon>
+      <ion-label>{{ this.translate_service.translate('TITLE_WIP') }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="soundboard" style="--ripple-color: transparent;">
+    </ion-tab-button>
+
+    <ion-tab-button tab="storage">
+      <ion-icon name="cloud-done"></ion-icon>
+      <ion-label>{{ this.translate_service.translate('TITLE_STORAGE') }}</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="settings">
       <ion-icon name="settings"></ion-icon>
-      <ion-label>Settings</ion-label>
+      <ion-label>{{ this.translate_service.translate('TITLE_SETTINGS') }}</ion-label>
     </ion-tab-button>
+
   </ion-tab-bar>
 
 </ion-tabs>
+
+<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab-button color="light" (click)="gotoHome()">
+    <ion-icon name="musical-notes" color="primary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

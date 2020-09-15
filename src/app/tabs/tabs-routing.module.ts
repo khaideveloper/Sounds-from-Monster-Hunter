@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule),
       },
       {
+        path: 'storage',
+        loadChildren: () => import('./pages/storage/storage.module').then(m => m.StoragePageModule),
+      },
+      {
         path: '',
         redirectTo: '/tabs/soundboard',
         pathMatch: 'full',
@@ -30,7 +34,12 @@ const routes: Routes = [
     path: '',
     redirectTo: '/tabs/soundboard',
     pathMatch: 'full',
+  },
+  {
+    path: 'storage',
+    loadChildren: () => import('./pages/storage/storage.module').then( m => m.StoragePageModule)
   }
+
 ];
 
 @NgModule({

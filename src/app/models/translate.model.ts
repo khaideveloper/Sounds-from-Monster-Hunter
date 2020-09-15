@@ -10,6 +10,8 @@ export const LanguagesData: any = {
     "TITLE_INFO": "Info",
     "TITLE_SOUNDBOARD": "Soundboard",
     "TITLE_SETTINGS": "Settings",
+    "TITLE_STORAGE": "Storage",
+    "TITLE_WIP": "W.I.P.",
     "SETTINGS_CANSEARCH": "Enable/Disable Search",
     "SETTINGS_HASIMAGE": "Enable/Disable Images",
     "SETTINGS_VOLUME": "Volume",
@@ -19,6 +21,7 @@ export const LanguagesData: any = {
     "CANCEL": "Cancel",
     "OK": "OK",
     "VERSION_NUMBER": "Version",
+    "CAT_TOAST": "The cat wishes you good luck!",
   },
   it: {
     "LANG_EN": "Inglese",
@@ -27,6 +30,8 @@ export const LanguagesData: any = {
     "TITLE_INFO": "Informazioni",
     "TITLE_SOUNDBOARD": "Soundboard",
     "TITLE_SETTINGS": "Impostazioni",
+    "TITLE_STORAGE": "Archivio",
+    "TITLE_WIP": "W.I.P.",
     "SETTINGS_CANSEARCH": "Abilita/Disabilita Ricerca",
     "SETTINGS_HASIMAGE": "Abilita/Disabilita Immagini",
     "SETTINGS_VOLUME": "Volume",
@@ -36,5 +41,6 @@ export const LanguagesData: any = {
     "CANCEL": "Annulla",
     "OK": "OK",
     "VERSION_NUMBER": "Versione",
+    "CAT_TOAST": "Il gatto ti augura buona fortuna!",
   }
 }
