@@ -1,3 +1,4 @@
+import { StorageService } from './shared/services/storage/storage.service';
 import { TranslateService } from './shared/services/translate/translate.service';
 import { SettingsService } from './shared/services/settings/settings.service';
 import { NgModule } from '@angular/core';
@@ -31,6 +32,7 @@ import { SharedModule } from './shared.module';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SettingsService,
     TranslateService,
+    StorageService,
   ],
   bootstrap: [
     AppComponent,

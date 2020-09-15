@@ -14,6 +14,8 @@
         flex-direction: column;
         padding: 1em;
         height: 4em;
+        justify-content: end;
+        align-items: initial;
         transition-property: height;
         transition-duration: 0.2s;
         transition-timing-function: cubic-bezier(0.0,0.0,0.2,1);
@@ -37,4 +39,9 @@
             background-color: initial;
         }
     }
+}
+
+ion-fab-button {
+    width: 40px;
+    height: 40px;
 }

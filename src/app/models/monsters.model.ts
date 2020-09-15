@@ -6,12 +6,14 @@ export class Monster {
     imgSRC : string;
     expanded : boolean;
     playing: boolean;
+    cloud: boolean;
     constructor(name? : string, audioSRC? : string, imgSRC? : string) {
       if(name != null) { this.name = name; }
       if(audioSRC != null) { this.audioSRC = audioSRC; }
       if(imgSRC != null) { this.imgSRC = imgSRC; }
       this.expanded = false;
       this.playing = false;
+      this.cloud = false;
     }
 }
  

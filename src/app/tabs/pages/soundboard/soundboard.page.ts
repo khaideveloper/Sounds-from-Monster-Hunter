@@ -1,3 +1,4 @@
+import { StorageService } from './../../../shared/services/storage/storage.service';
 import { TranslateService } from './../../../shared/services/translate/translate.service';
 import { SettingsService } from '../../../shared/services/settings/settings.service';
 import { Component } from '@angular/core';
@@ -30,6 +31,7 @@ export class SoundboardPage {
     public platform: Platform,
     public settings_service: SettingsService,
     public translate_service: TranslateService,
+    public storage_service: StorageService,
   ) {
     this.initMonsters();
   }
@@ -74,6 +76,32 @@ export class SoundboardPage {
       monster.audio.currentTime = 0;
       this.current = null;
     }
+  }
+
+  //#endregion
+
+  //#region Methods
+
+  cloud(monster: Monster) {
+    monster.cloud = !monster.cloud;
+    this.convertToDataURLviaCanvas(monster);
+  }
+
+  convertToDataURLviaCanvas(monster: Monster){
+    return new Promise( (resolve, reject) => {
+      let img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.onload = () => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        canvas.getContext("2d").drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        this.storage_service.saveImage(monster,dataURL);
+        return dataURL;
+      };
+      img.src = monster.imgSRC;
+    });
   }
 
   //#endregion

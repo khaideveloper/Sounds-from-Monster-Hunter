@@ -18,9 +18,14 @@
           name="{{ monster.expanded ? 'close-circle' : 'help-circle'}}" *ngIf="this.settings_service.settings.hasImage"></ion-icon>
           {{ monster.name }}
         </ion-text>
-        <ion-button color="{{ monster.audio.paused ? 'primary' : 'danger' }}" (click)="playAudio(monster)">
-          <ion-icon name="{{ monster.audio.paused ? 'play' : 'stop' }}"></ion-icon>
-        </ion-button>
+        <span style="display: flex; flex-direction: row;">
+          <ion-fab-button color="medium" style="--box-shadow: none; --background-color: transparent; margin-right: 8px;" (click)="cloud(monster)">
+            <ion-icon name="{{ monster.cloud ? 'cloud-done' : 'save' }}"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="{{ monster.audio.paused ? 'primary' : 'danger' }}" (click)="playAudio(monster)">
+            <ion-icon name="{{ monster.audio.paused ? 'play' : 'stop' }}"></ion-icon>
+          </ion-fab-button>
+        </span>
       </div>
       <div class="desc" [ngStyle]="{ 'background-image' : 'url(' + monster.imgSRC + ')' }" *ngIf="monster.expanded && this.settings_service.settings.hasImage"></div>      
     </ion-card>
