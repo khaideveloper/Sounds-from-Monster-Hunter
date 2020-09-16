@@ -1,3 +1,4 @@
+import { StorageService } from './shared/services/storage/storage.service';
 import { TranslateService } from './shared/services/translate/translate.service';
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
@@ -22,7 +23,9 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private translate_service: TranslateService,
+    private storage_service: StorageService,
   ) {
+    this.storage_service.init();
     this.initializeApp();
   }
 

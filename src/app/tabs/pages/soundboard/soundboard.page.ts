@@ -4,6 +4,7 @@ import { SettingsService } from '../../../shared/services/settings/settings.serv
 import { Component } from '@angular/core';
 import { monsters, Monster } from '../../../models/monsters.model';
 import { Platform } from '@ionic/angular';
+import { Base64 } from '@ionic-native/base64/ngx';
 
 @Component({
   selector: 'app-soundboard',
@@ -13,9 +14,6 @@ import { Platform } from '@ionic/angular';
 export class SoundboardPage {
 
   //#region Variables
-
-  /** Monsters array */
-  monsters : Array<Monster> = new Array<Monster>();
 
   /** Current serach string */
   search: string = '';
@@ -32,20 +30,8 @@ export class SoundboardPage {
     public settings_service: SettingsService,
     public translate_service: TranslateService,
     public storage_service: StorageService,
+    private base64: Base64,
   ) {
-    this.initMonsters();
-  }
-
-  /** Initialize every monster on the list */
-  initMonsters() {
-    monsters.forEach((element) => {
-      let monster = new Monster(
-        element.name.split('_').join(' '),
-        'https://docs.google.com/uc?export=download&id=' + element.audio_code,
-        'https://i.imgur.com/' + element.img_code + '.png');
-      monster.audio = new Audio();
-      this.monsters.push(monster);
-    });
   }
 
   //#endregion
@@ -83,25 +69,54 @@ export class SoundboardPage {
   //#region Methods
 
   cloud(monster: Monster) {
-    monster.cloud = !monster.cloud;
-    this.convertToDataURLviaCanvas(monster);
+    this.cloudImage(monster);
+    this.cloudAudio(monster);
   }
 
-  convertToDataURLviaCanvas(monster: Monster){
-    return new Promise( (resolve, reject) => {
-      let img = new Image();
-      img.crossOrigin = 'Anonymous';
-      img.onload = () => {
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        canvas.getContext("2d").drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        this.storage_service.saveImage(monster,dataURL);
-        return dataURL;
-      };
-      img.src = monster.imgSRC;
-    });
+  cloudAudio(monster: Monster) {  
+    var xhr = new XMLHttpRequest(),
+    audioContext = new AudioContext(),
+    source = audioContext.createBufferSource();
+    xhr.onload = function() {
+      console.log(xhr.response);
+    };
+    xhr.onerror = function() { console.log('An error occurred'); };
+
+    xhr.open('GET', encodeURI(monster.audioSRC), true);
+    xhr.responseType = 'arraybuffer';
+    xhr.send();
+  }
+
+  cloudImage(monster: Monster) {
+    monster.isCloudLoading = true;
+    if(monster.cloud) {
+      this.storage_service.removeImage(monster);
+      return;
+    }
+    let img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = () => {
+      let canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      canvas.getContext("2d").drawImage(img, 0, 0);
+      let dataURL = canvas.toDataURL("image/png");
+      if(dataURL == null || dataURL === '') { return; }
+      this.storage_service.saveImage(monster,dataURL)
+      .then(() => { monster.cloud = !monster.cloud; })
+      .finally(() => { monster.isCloudLoading = false; });
+    };
+    img.onerror = () => { monster.isCloudLoading = false; };
+    img.src = monster.imgSRC;
+  }
+
+  doRefresh(event) {
+    let sub = this.storage_service.storageChecked.subscribe((value) => { if(value) { event.target.complete(); } });
+    this.storage_service.loadData();
+    setTimeout(() => {
+      if(sub != null) { sub.unsubscribe(); }
+      event.target.complete();
+    }, 8000);
   }
 
   //#endregion
