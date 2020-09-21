@@ -1,11 +1,11 @@
+<!-- Top Header -->
 <ion-header [translucent]="false">
   <ion-toolbar color="primary">
-    <ion-title>
-      <span> {{ this.translate_service.translate('TITLE_SETTINGS') }} <img class="cat_icon" src="assets/icon/app_icon.svg"> </span>
-    </ion-title>
+    <ion-title> <span> {{ this.translate_service.translate('TITLE_SETTINGS') }} <img class="cat_icon" src="assets/icon/app_icon.svg"> </span> </ion-title>
   </ion-toolbar>
 </ion-header>
 
+<!-- Content -->
 <ion-content [fullscreen]="true">
 
   <!-- Toggles in a List -->
@@ -34,6 +34,13 @@
       <ion-toggle (ionChange)="dirty()" [(ngModel)]="this.settings_service.settings.hasImage"></ion-toggle>
     </ion-item>
 
+    <!-- Images -->
+    <ion-item>
+      <ion-label>{{ this.translate_service.translate('SETTINGS_SAVEIMAGE') }}</ion-label>
+      <ion-toggle (ionChange)="dirty(); this.storage_service.clearImages(this.settings_service.settings.saveImages)"
+        [(ngModel)]="this.settings_service.settings.saveImages"></ion-toggle>
+    </ion-item>
+
     <!-- Overflow -->
     <ion-item>
       <ion-label>{{ this.translate_service.translate('SETTINGS_HASOVERFLOW') }}</ion-label>
@@ -46,7 +53,7 @@
       <ion-range min="0" max="1" step="0.1" (ionChange)="dirty()" snaps="true" [(ngModel)]="this.settings_service.settings.volume"></ion-range>
     </ion-item>
 
-    <!-- Salva le impostazioni -->
+    <!-- Save the settings -->
     <!-- <ion-button [disabled]="!this.settings_service.dirty" expand="full" (click)="this.settings_service.saveSettings()">
       {{ this.translate_service.translate('SAVE') }}
     </ion-button> -->

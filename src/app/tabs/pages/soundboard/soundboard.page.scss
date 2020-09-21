@@ -1,32 +1,55 @@
+/** Container of the page content */
 .container {
     padding: 1em;
     
+    /** Expanded item of the list */
     .item_expanded {
         height: 30em !important;
     }
 
+    /** Hidden item of the list */
     .item_hidden {
         display: none !important;
     }
 
+    /** Item of the list */
     .item {
         display: flex;
         flex-direction: column;
-        padding: 1em;
+        justify-content: space-between;
         height: 4em;
-        justify-content: end;
         align-items: initial;
         transition-property: height;
         transition-duration: 0.2s;
         transition-timing-function: cubic-bezier(0.0,0.0,0.2,1);
 
-        .name {
-            font-weight: bold;
-            font-size: 1.3em;
-            white-space: nowrap;
+        /** Header with the name and the buttons */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 4em;
+            padding: 1em;
+
+            /** Name on the left side */
+            .name {
+                display: flex;
+                align-items: center;
+                font-weight: bold;
+                font-size: 1.3em;
+                white-space: nowrap;
+            }
+
+            /** Button on the left side */
+            ion-fab-button {
+                margin-right: 8px;
+                --background: none;
+                --box-shadow: none;
+            }
         }
 
-        .desc {
+        /** Image under the item */
+        .desc_image {
             width: 100%;
             height: 100%;
             background-position-x: center;
@@ -41,6 +64,7 @@
     }
 }
 
+/** Size of the buttons */
 ion-fab-button {
     width: 40px;
     height: 40px;

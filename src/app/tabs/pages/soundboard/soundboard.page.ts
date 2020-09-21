@@ -2,9 +2,9 @@ import { StorageService } from './../../../shared/services/storage/storage.servi
 import { TranslateService } from './../../../shared/services/translate/translate.service';
 import { SettingsService } from '../../../shared/services/settings/settings.service';
 import { Component } from '@angular/core';
-import { monsters, Monster } from '../../../models/monsters.model';
-import { Platform } from '@ionic/angular';
-import { Base64 } from '@ionic-native/base64/ngx';
+import { Monster } from '../../../models/monsters.model';
+import { ModalController, Platform } from '@ionic/angular';
+import { ImageDialogComponent } from 'src/app/shared/components/image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-soundboard',
@@ -30,8 +30,15 @@ export class SoundboardPage {
     public settings_service: SettingsService,
     public translate_service: TranslateService,
     public storage_service: StorageService,
-    private base64: Base64,
+    public modalController: ModalController,
   ) {
+    this.storage_service.monsters.forEach((monster) => {
+      monster.loading = true;
+      monster.audio.onloadeddata = (() => { monster.loading = false; });
+      monster.audio.onerror = (() => { monster.loading = false; });
+      monster.audio.src = monster.audioSRC;
+      monster.audio.preload = 'auto';
+    });
   }
 
   //#endregion
@@ -40,59 +47,46 @@ export class SoundboardPage {
 
   /** Play a monster audio */
   playAudio(monster : Monster) {
-    monster.audio.currentTime = 0;
-    //TODO: This code sucks
-    if(this.current != null && !this.settings_service.settings.hasOverflow) {
-      this.current.pause();
-      this.current.currentTime = 0;
-      this.current = null;
-    }
-    if(monster.audio.paused) {
-      monster.audio.src = monster.audioSRC;
+    // If the audio hasn't ended, then end it
+    if((this.current != null && !this.current.paused) && !this.settings_service.settings.hasOverflow) { this.resetCurrent(monster.audio); }
+    //If the audio is not playing, reset it
+    if(monster.audio.paused || monster.audio.ended) {
+      //Set the current selected volume
       monster.audio.volume = this.settings_service.settings.volume;
+      //Set the current audio as the selected
       this.current = monster.audio;
-      monster.audio.onended = (() => {
-        monster.audio.pause();
-        monster.audio.currentTime = 0;
-        this.current = null;
-      }); 
-      monster.audio.play();
-    } else {
-      monster.audio.pause();
-      monster.audio.currentTime = 0;
-      this.current = null;
+      //When the audio ends, reset it
+      monster.audio.onended = (() => { this.resetCurrent(monster.audio); }); 
+      //Play the audio
+      if(monster.audio.paused) { monster.audio.play(); }
     }
+    //If the audio is playing, end it
+    else { this.resetCurrent(monster.audio); }
+  }
+
+  /** Reset the current audio */
+  resetCurrent(audio: HTMLAudioElement) {
+    this.current.pause();
+    this.current.currentTime = 0;
+    this.current = null;
+    audio.pause();
+    audio.currentTime = 0;
   }
 
   //#endregion
 
   //#region Methods
 
-  cloud(monster: Monster) {
-    this.cloudImage(monster);
-    this.cloudAudio(monster);
+  expand(monster: Monster) {
+    monster.expanded = !monster.expanded;
+    if(monster.expanded) { this.storeImage(monster); }
   }
 
-  cloudAudio(monster: Monster) {  
-    var xhr = new XMLHttpRequest(),
-    audioContext = new AudioContext(),
-    source = audioContext.createBufferSource();
-    xhr.onload = function() {
-      console.log(xhr.response);
-    };
-    xhr.onerror = function() { console.log('An error occurred'); };
-
-    xhr.open('GET', encodeURI(monster.audioSRC), true);
-    xhr.responseType = 'arraybuffer';
-    xhr.send();
-  }
-
-  cloudImage(monster: Monster) {
-    monster.isCloudLoading = true;
-    if(monster.cloud) {
-      this.storage_service.removeImage(monster);
-      return;
-    }
+  /** Send the image to the storage */
+  storeImage(monster: Monster) {
+    //If the monster is saved on the cloud, don't do anything
+    if(monster.stored || !this.settings_service.settings.saveImages) { return; }
+    //Create a new image canvas to convert the image to base64
     let img = new Image();
     img.crossOrigin = 'Anonymous';
     img.onload = () => {
@@ -101,22 +95,24 @@ export class SoundboardPage {
       canvas.height = img.height;
       canvas.getContext("2d").drawImage(img, 0, 0);
       let dataURL = canvas.toDataURL("image/png");
-      if(dataURL == null || dataURL === '') { return; }
-      this.storage_service.saveImage(monster,dataURL)
-      .then(() => { monster.cloud = !monster.cloud; })
-      .finally(() => { monster.isCloudLoading = false; });
+      //If the conversion was succesful, store the image
+      if(dataURL != null && dataURL !== '') {
+        this.storage_service.saveImage(monster,dataURL)
+        //When the storing is done, mark the image as saved
+        .then(() => { monster.stored = !monster.stored; })
+      }
     };
-    img.onerror = () => { monster.isCloudLoading = false; };
+    /** Create the image */
     img.src = monster.imgSRC;
   }
 
-  doRefresh(event) {
-    let sub = this.storage_service.storageChecked.subscribe((value) => { if(value) { event.target.complete(); } });
-    this.storage_service.loadData();
-    setTimeout(() => {
-      if(sub != null) { sub.unsubscribe(); }
-      event.target.complete();
-    }, 8000);
+  /** Show a modal of the image selected */
+  async showImage(monster: Monster) {
+    const modal = await this.modalController.create({
+      component: ImageDialogComponent,
+      componentProps: { image: monster.imgSRC }
+    });
+    return await modal.present();
   }
 
   //#endregion

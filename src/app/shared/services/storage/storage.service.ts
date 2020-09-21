@@ -25,7 +25,7 @@ export class StorageService {
     monsters.forEach((element) => {
       let monster = new Monster(
         element.name.split('_').join(' '),
-        'https://www.googleapis.com/drive/v2/files/' + element.audio_code + '?alt=media&source=downloadUrl',
+        'assets/audio/' + element.name + '.mp3',
         //'https://docs.google.com/uc?export=download&id=' + element.audio_code,
         'https://i.imgur.com/' + element.img_code + '.png');
       monster.audio = new Audio();
@@ -40,8 +40,7 @@ export class StorageService {
   }
 
   removeImage(monster: Monster) {
-    this.storage.remove('image_' + monster.name)
-    .then(() => { monster.cloud = false; monster.isCloudLoading = false; });
+    this.storage.remove('image_' + monster.name);
   }
 
   loadData() {
@@ -58,17 +57,23 @@ export class StorageService {
           let monster = this.monsters.find((a) => { return a.name === key.split('image_')[1]; });
           if(monster == null) { return; }
           monster.imgSRC = value;
-          monster.cloud = true;
+          monster.stored = true;
         }
         else if(key.includes('audio_')) {
   
         }
         if(index === (length-1)) {
-          this.monsters.forEach((value) => { if(value.cloud == null) { value.cloud = false; } });
+          this.monsters.forEach((value) => { if(value.stored == null) { value.stored = false; } });
           this.storageChecked.next(true);
         }
       });
     });
+  }
+
+  /** Clear all the images */
+  clearImages(save: boolean) {
+    if(save) { return; }
+    this.monsters.forEach((monster) => { this.removeImage(monster); });
   }
 
 }

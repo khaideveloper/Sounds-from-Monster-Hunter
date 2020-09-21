@@ -1,39 +1,49 @@
+<!-- Top Header -->
 <ion-header [translucent]="false">
   <ion-toolbar color="primary">
-    <ion-title>
-      <span> {{ this.translate_service.translate('TITLE_SOUNDBOARD') }} <img class="cat_icon" src="assets/icon/app_icon.svg"> </span>
-    </ion-title>
+    <ion-title> <span> {{ this.translate_service.translate('TITLE_SOUNDBOARD') }} <img class="cat_icon" src="assets/icon/app_icon.svg"> </span> </ion-title>
   </ion-toolbar>
 </ion-header>
 
+<!-- Content -->
 <ion-content [fullscreen]="true">
-  
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
 
+  <!-- Content of the page -->
   <div class="container">
-    <ion-searchbar [placeholder]="this.translate_service.translate('SEARCH_PLACEHOLDER')" [(ngModel)]="this.search" animated *ngIf="this.settings_service.settings.canSearch"></ion-searchbar>
+
+    <!-- Searchbar for the monsters -->
+    <ion-searchbar [placeholder]="this.translate_service.translate('SEARCH_PLACEHOLDER')"
+    [(ngModel)]="this.search" animated *ngIf="this.settings_service.settings.canSearch"></ion-searchbar>
+
+    <!-- List of monsters -->
     <ion-card class="item" [class.item_expanded]="monster.expanded && this.settings_service.settings.hasImage" *ngFor="let monster of this.storage_service.monsters"
     [class.item_hidden]="(!monster.name.toLowerCase().includes(this.search.toLowerCase()) && this.search !== '') && this.settings_service.settings.canSearch">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: -8px;">
-        <ion-text color="primary" class="name" style="display: flex; align-items: center;">
-          <ion-icon class="ion-activatable ripple-parent" (click)="monster.expanded = !monster.expanded" style="margin-right: 8px; height: 2em; width: 2em;"
-          name="{{ monster.expanded ? 'close-circle' : 'help-circle'}}" *ngIf="this.settings_service.settings.hasImage"></ion-icon>
+
+    <!-- Top Header -->
+      <div class="header">
+        <!-- Left side -->
+        <ion-text color="primary" class="name">
+          <!-- Image button -->
+          <ion-fab-button color="medium" (click)="expand(monster)" *ngIf="this.settings_service.settings.hasImage">
+            <ion-icon name="{{ monster.expanded ? 'close-circle' : 'image-sharp'}}"></ion-icon>
+          </ion-fab-button>
+          <!-- Name -->
           {{ monster.name }}
         </ion-text>
-        <span style="display: flex; flex-direction: row;">
-          <ion-fab-button *ngIf="monster.cloud != null" color="medium" style="--box-shadow: none; --background-color: transparent; margin-right: 8px;" (click)="cloud(monster)">
-            <ion-icon name="{{ monster.cloud ? 'cloud-done' : 'save' }}" [ngStyle]="{ 'display' : (!monster.isCloudLoading) ? 'block' : 'none' }"></ion-icon>
-            <img src="assets/loader.svg" [ngStyle]="{ 'display' : (monster.isCloudLoading) ? 'block' : 'none' }">
-          </ion-fab-button>
-          <ion-fab-button color="{{ monster.audio.paused ? 'primary' : 'danger' }}" (click)="playAudio(monster)">
-            <ion-icon name="{{ monster.audio.paused ? 'play' : 'stop' }}"></ion-icon>
-          </ion-fab-button>
-        </span>
+
+        <!-- Play Button -->
+        <ion-fab-button color="{{ monster.audio.paused ? 'primary' : 'danger' }}" (click)="playAudio(monster)">
+          <ion-icon name="{{ monster.audio.paused ? 'play' : 'stop' }}" [ngStyle]="{'display' : (!monster.loading) ? 'block' : 'none'}"></ion-icon>
+          <img src="assets/loader.svg" [ngStyle]="{'display' : (monster.loading) ? 'block' : 'none'}" style="filter: invert(1)">
+        </ion-fab-button>
       </div>
-      <div class="desc" [ngStyle]="{ 'background-image' : 'url(' + monster.imgSRC + ')' }" *ngIf="monster.expanded && this.settings_service.settings.hasImage"></div>      
+
+      <!-- Bottom description (image) -->
+      <div class="desc_image" (click)="showImage(monster)" *ngIf="monster.expanded && this.settings_service.settings.hasImage"
+      [ngStyle]="{ 'background-image' : 'url(' + monster.imgSRC + ')' }"></div>   
+
     </ion-card>
+
   </div>
 
 </ion-content>

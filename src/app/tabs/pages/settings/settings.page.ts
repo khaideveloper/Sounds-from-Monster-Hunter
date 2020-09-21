@@ -1,6 +1,7 @@
 import { TranslateService } from './../../../shared/services/translate/translate.service';
 import { SettingsService } from '../../../shared/services/settings/settings.service';
 import { Component } from '@angular/core';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-settings',
@@ -18,6 +19,7 @@ export class SettingsPage {
   constructor(
     public settings_service: SettingsService,
     public translate_service: TranslateService,
+    public storage_service: StorageService,
   ) {
     
   }
@@ -26,12 +28,15 @@ export class SettingsPage {
 
   //#region 
 
+  /** Change the current language */
   changeLanguage() {
     this.translate_service.use(this.translate_service.currentLanguage);
   }
 
+  /** Set the settings as dirty */
   dirty() {
     this.settings_service.dirty = true;
+    //TODO: Right now it's always saving the settings
     this.settings_service.saveSettings();
   }
 

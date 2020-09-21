@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { Base64 } from '@ionic-native/base64/ngx';
 import { TranslatePipe } from './shared/pipes/translate/translate.pipe';
 
 @NgModule({
@@ -13,10 +12,8 @@ import { TranslatePipe } from './shared/pipes/translate/translate.pipe';
   ],
   exports: [ 
     TranslatePipe,
-    Base64,
   ],
   providers: [
-    Base64,
   ],
   bootstrap: [
       

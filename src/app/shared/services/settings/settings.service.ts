@@ -1,3 +1,4 @@
+import { StorageService } from './../storage/storage.service';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
@@ -10,6 +11,8 @@ export class Settings {
   volume: number = 0.3;
   /** If the audio can play one over another */
   hasOverflow: boolean = false;
+  /** If the images should be saved */
+  saveImages: boolean = false;
 }
 
 @Injectable({ providedIn: 'root' })
