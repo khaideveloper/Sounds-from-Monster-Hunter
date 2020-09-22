@@ -11,7 +11,7 @@ export class TranslatePipe implements PipeTransform {
   //#region Init
 
   constructor(
-    private translate_service: TranslateService
+    private translate_service: TranslateService,
   ) {
 
   }

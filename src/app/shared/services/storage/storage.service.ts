@@ -26,7 +26,6 @@ export class StorageService {
       let monster = new Monster(
         element.name.split('_').join(' '),
         'assets/audio/' + element.name + '.mp3',
-        //'https://docs.google.com/uc?export=download&id=' + element.audio_code,
         'https://i.imgur.com/' + element.img_code + '.png');
       monster.audio = new Audio();
       this.monsters.push(monster);

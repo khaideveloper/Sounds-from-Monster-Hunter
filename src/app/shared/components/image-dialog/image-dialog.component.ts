@@ -1,16 +1,30 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-image-dialog',
   templateUrl: './image-dialog.component.html',
   styleUrls: ['./image-dialog.component.scss'],
 })
-export class ImageDialogComponent implements OnInit {
+export class ImageDialogComponent {
+
+  //#region Variables
 
   @Input() image: string;
 
-  constructor() { }
+  //#endregion
 
-  ngOnInit() {}
+  //#region Init
+
+  constructor(
+
+  ) {
+
+  }
+
+  //#endregion
+
+  //#region Methods
+
+  //#endregion
 
 }

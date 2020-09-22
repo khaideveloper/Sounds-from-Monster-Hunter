@@ -1,4 +1,4 @@
-/* Monster class */
+/** Monster class */
 export class Monster {
     /** Name of the monster */
     name : string;
@@ -23,14 +23,13 @@ export class Monster {
         /** Image SRC */
         imgSRC? : string
     ) {
-        /** Check if some of the values are null */
         this.name = (name != null) ? name : '';
         this.audioSRC = audioSRC;
         this.imgSRC = imgSRC;
     }
 }
   
-/* Monster List */
+/** Monster List: The img_code refers to imgur.com */
 export const monsters : { name: string, img_code: string }[] = [
     {
         name: "Agnaktor",
